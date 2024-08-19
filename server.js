@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoute.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
+import path from "path";
 
 //configure
 dotenv.config();
@@ -31,6 +32,15 @@ app.use("/api/v1/product", productRoutes);
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to ecommerce app</h1>");
 });
+
+//STATIC FOLDER
+app.use(express.static(path.join(__dirname, "./client/build")));
+
+//STATIC ROUTES
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
 
 //port
 const PORT = process.env.PORT || 8080;
