@@ -8,7 +8,6 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 
-
 //configure
 dotenv.config();
 
@@ -18,8 +17,15 @@ connectDB();
 //rest objest
 const app = express();
 
+// Handling cors
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  methods: "GET, POST, DELETE, PATCH, PUT, HEAD",
+  credentials: true,
+};
+
 //middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -32,9 +38,6 @@ app.use("/api/v1/product", productRoutes);
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to ecommerce app</h1>");
 });
-
-
-
 
 //port
 const PORT = process.env.PORT || 8080;
